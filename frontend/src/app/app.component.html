@@ -1,0 +1,161 @@
+<div class="container">
+  <div class="row py-3">
+    <div class="col-6">
+      <h4>Portal do Estudante</h4>
+    </div>
+    <div class="col-6 text-end">
+      <button class="btn btn-outline-success" (click)="openModal()">
+        Cadastrar +
+      </button>
+    </div>
+  </div>
+  <ng-container *ngIf="studentList.length !== 0; else template">
+    <div class="row">
+      <ng-container *ngFor="let student of studentList">
+        <div class="col-3 mb-3">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-6">Nome: {{ student.name }}</div>
+                <div class="col-6 text-end">{{ student.phoneNo }}</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <p>Cidade: {{ student.city }}</p>
+              <p>Estado: {{ student.state }}</p>
+              <p>Endereço: {{ student.address }}</p>
+            </div>
+            <div class="card-footer text-center">
+              <div class="row d-flex flex-column">
+                <div class="col-8 px-3 w-100 mb-2">
+                  <span>{{ student.email }}</span>
+                </div>
+                <div class="col-4 d-flex justify-content-between w-100 px-3">
+                  <button
+                    class="btn btn-outline-success btn-sm"
+                    (click)="editStudent(student)"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    class="btn btn-outline-danger btn-sm"
+                    (click)="deleteStudent(student)"
+                  >
+                    Deletar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+  <ng-template #template>
+    <div class="row">
+      <div class="col-12 p-4 text-center">
+        <p>Nenhum estudante cadastrado!</p>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<div class="modal" tabindex="-1" id="modalNewStudent" #modalNewStudent>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cadastro do estudante</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 py-2">
+            <label for="name">Nome</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="Nome"
+              [(ngModel)]="studentObj.name"
+            />
+          </div>
+        </div>
+        <div class="row py-2">
+          <div class="col-6">
+            <label for="phone">Telefone</label>
+            <input
+              type="text"
+              class="form-control"
+              id="phone"
+              placeholder="Telefone"
+              [(ngModel)]="studentObj.phoneNo"
+            />
+          </div>
+          <div class="col-6">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Email"
+              [(ngModel)]="studentObj.email"
+            />
+          </div>
+        </div>
+        <div class="row py-2">
+          <div class="col-6">
+            <label for="city">Cidade</label>
+            <input
+              type="text"
+              class="form-control"
+              id="city"
+              placeholder="Cidade"
+              [(ngModel)]="studentObj.city"
+            />
+          </div>
+          <div class="col-6">
+            <label for="state">Estado</label>
+            <input
+              type="text"
+              class="form-control"
+              id="state"
+              placeholder="Estado"
+              [(ngModel)]="studentObj.state"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label for="address">Endereço</label>
+            <textarea
+              class="form-control"
+              id="address"
+              rows="3"
+              [(ngModel)]="studentObj.address"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="closeModal()">
+          Voltar
+        </button>
+        <ng-container *ngIf="studentObj.id >= 1; else modifyStudent">
+          <button
+            type="button"
+            class="btn btn-success"
+            (click)="updateStudent()"
+          >
+            Atualizar
+          </button>
+        </ng-container>
+        <ng-template #modifyStudent>
+          <button type="button" class="btn btn-primary" (click)="saveStudent()">
+            Salvar
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+</div>
